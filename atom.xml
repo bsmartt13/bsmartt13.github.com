@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[the Bytarded Blog]]></title>
+  <title><![CDATA[SmarttBits]]></title>
   <link href="http://bsmartt13.github.com/atom.xml" rel="self"/>
   <link href="http://bsmartt13.github.com/"/>
-  <updated>2012-01-05T09:33:26-08:00</updated>
+  <updated>2012-01-05T13:34:25-08:00</updated>
   <id>http://bsmartt13.github.com/</id>
   <author>
     <name><![CDATA[Bill Smartt]]></name>
