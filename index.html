@@ -9,7 +9,7 @@
   <meta name="author" content="Bill Smartt">
 
   
-  <meta name="description" content="Blog Archives Recent Posts Github Repos Status updating&#8230; @bsmartt13 on Github $.domReady(function(){ if (!window.jXHR){ var jxhr = document. &hellip;">
+  <meta name="description" content="Introduction Bits and Bytes need to be reversed quite often. Some computers store data in a little-endian format and some in a big-endian format. In &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,59 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/05/reversing-bits-and-bytes/">Reversing Bits and Bytes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-05T13:48:00-08:00" pubdate data-updated="true">5<span>th</span>rdinal</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Introduction</h3>
+
+<p>Bits and Bytes need to be reversed quite often.  Some computers store data in a little-endian format and some in a big-endian format.  In order for communication between these two hosts to work, these conversions must be done with extreme precision.  When coding at a high level, such as using the Socket object in a Java program, one doesn&#8217;t need to worry about these issues.  As the data flows down the OSI model from the Application layer to the Physical layer, our operating system kernel will do all the endian conversions as necessary.</p>
+
+<p>But this may not always be the case.  And even when it is, having a good understanding of whats going on under the hood can be very beneficial for debugging.  A few examples of which you may be interested in endianness and the flipping of bits/bytes are:
+- Raw Sockets in C
+- Writing exploits
+- Cryptography
+- Assembly Language</p>
+
+<h3>Understanding the difference</h3>
+
+<p>Distinguishing between flipping bits and flipping bytes is a must for hackers.  Let&#8217;s take the example <code>0xdeadbeef</code>.  For the sake of simplicity, we&#8217;ll assume an atomic variable size of 2 bytes or 16 bits.  This is standard on Linux kernel 2.6.39.* and Windows XP SP3.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/05/reversing-bits-and-bytes/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -88,6 +141,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/05/reversing-bits-and-bytes/">Reversing Bits and Bytes</a>
+      </li>
     
   </ul>
 </section>

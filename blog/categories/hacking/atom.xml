@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: hacking | SmarttBits]]></title>
+  <link href="http://bsmartt13.github.com/blog/categories/hacking/atom.xml" rel="self"/>
+  <link href="http://bsmartt13.github.com/"/>
+  <updated>2012-01-05T21:15:57-08:00</updated>
+  <id>http://bsmartt13.github.com/</id>
+  <author>
+    <name><![CDATA[Bill Smartt]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Reversing Bits and Bytes]]></title>
+    <link href="http://bsmartt13.github.com/blog/2012/01/05/reversing-bits-and-bytes/"/>
+    <updated>2012-01-05T13:48:00-08:00</updated>
+    <id>http://bsmartt13.github.com/blog/2012/01/05/reversing-bits-and-bytes</id>
+    <content type="html"><![CDATA[<h3>Introduction</h3>
+
+<p>Bits and Bytes need to be reversed quite often.  Some computers store data in a little-endian format and some in a big-endian format.  In order for communication between these two hosts to work, these conversions must be done with extreme precision.  When coding at a high level, such as using the Socket object in a Java program, one doesn't need to worry about these issues.  As the data flows down the OSI model from the Application layer to the Physical layer, our operating system kernel will do all the endian conversions as necessary.</p>
+
+<p>But this may not always be the case.  And even when it is, having a good understanding of whats going on under the hood can be very beneficial for debugging.  A few examples of which you may be interested in endianness and the flipping of bits/bytes are:
+- Raw Sockets in C
+- Writing exploits
+- Cryptography
+- Assembly Language</p>
+
+<h3>Understanding the difference</h3>
+
+<p>Distinguishing between flipping bits and flipping bytes is a must for hackers.  Let's take the example <code>0xdeadbeef</code>.  For the sake of simplicity, we'll assume an atomic variable size of 2 bytes or 16 bits.  This is standard on Linux kernel 2.6.39.* and Windows XP SP3.</p>
+
+<!-- more -->
+
+
+<p>Let's first <strong>reverse bytes</strong>.  There are two steps:
+1.  Split into single byte (8 bit) chunks:
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0   1   2   3
+</span><span class='line'>de  ad  be  ef</span></code></pre></td></tr></table></div></figure></notextile></div>
+reverse the order of the bytes:
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>3   2   1   0
+</span><span class='line'>ef  be  ad  de</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>As you can see, when we reverse bytes in hexadecimal notation, the characters are reordered, but not modified.  This is not necessarily true with bit reversal.</p>
+
+<p>Here's how you can reverse the bits by hand.  start by writing out each hexadecimal byte in binary (eg. <code>0xde</code> becomes <code>1101 1110</code>).  On the next line, write the binary string backwards.  My favorite way to do this is retype the binary string, but after entering each bit, use the left arrow key to reposition the cursor in front of what you just typed.  You can either remove the spaces shown below separating each byte before this conversion or treat them as part of the string we are reversing.  If you don't believe me, try some trivial examples with some short english words.  (This method works for the above <em>byte reversal</em>, but you need to type two characters at a time and press the left arrow key twice to reposition yourself infront of the byte you just typed.)</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0xdeadbeef = 1101 1110 1010 1101 1011 1110 1110 1111
+</span><span class='line'>0xf77db57b = 1111 0111 0111 1101 1011 0101 0111 1011</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Reversing bits is trivial, the above method can be used, <em>but each chunk is a single bit rather than a byte</em>.  Let's look at bit reversal in hexadecimal.  In order to compute these results yourself, write out <code>0xdeadbeef</code> in binary form, and then write it in reverse.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0-15  16-31  32-47  48-63
+</span><span class='line'>de    ad     be     ef</span></code></pre></td></tr></table></div></figure></notextile></div>
+reverse the order of the <em>bits</em>:
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0-15  16-31  32-47  48-63
+</span><span class='line'>f7    7d     b5     7b</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Code</h3>
+
+<p>An efficient method of bit reversal is to exchange adjacent single bits, followed by exchanging adjacent 2-bit fields, followed by adjacent 4-bit fields, etc.  For a 32-bit register, the final swap is on adjacent 16-bit fields, but more generally you want to stop at <code>2^(n-1)</code>.  If you think about it, a swap any larger than this is superfluous.</p>
+
+<p>Here is the code:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>reverse bits example (reverse_bits.c)</span> <a href='/downloads/code/c/reverse_bits.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mh">0x01234567</span><span class="p">;</span>
+</span><span class='line'>	
+</span><span class='line'>	<span class="cm">/* note: the order of these assignment statements is irrelevant. */</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xAAAAAAAA</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xCCCCCCCC</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xf0f0f0f0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xff00ff00</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0000ffff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xffff0000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span>
+</span><span class='line'>	
+</span><span class='line'>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Furthermore, we can leverage the power of this algorithm by making each assignment dependent upon a conditional if statement.  Using certain combinations of this assignment sequence we can do a range of tasks involved in bit fiddling.  There are many many useful applications of this algorithm (for other values of <code>k</code>), and it is left as an exercise for the reader to find the rest of them.</p>
+
+<p>Here is the improved code:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>reverse bits extended (reverse_bits2.c)</span> <a href='/downloads/code/c/reverse_bits2.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#define REVERSE_BITS 31</span>
+</span><span class='line'><span class="cp">#define REVERSE_BYTES 24</span>
+</span><span class='line'><span class="cp">#define REVERSE_BITS_INEACH_BYTE 7</span>
+</span><span class='line'><span class="cp">#define REVERSE_HALFWORDS_INEACH_WORD 16 </span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mh">0x01234567</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">REVERSE_BITS</span><span class="p">;</span>
+</span><span class='line'>	
+</span><span class='line'>	<span class="cm">/* note: the order of these assignment statements is irrelevant. */</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xAAAAAAAA</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xCCCCCCCC</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xf0f0f0f0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xff00ff00</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0000ffff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xffff0000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	
+</span><span class='line'>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>
