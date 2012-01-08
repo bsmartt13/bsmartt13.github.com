@@ -4,7 +4,7 @@
   <title><![CDATA[SmarttBits]]></title>
   <link href="http://bsmartt13.github.com/atom.xml" rel="self"/>
   <link href="http://bsmartt13.github.com/"/>
-  <updated>2012-01-05T21:16:33-08:00</updated>
+  <updated>2012-01-08T10:47:02-08:00</updated>
   <id>http://bsmartt13.github.com/</id>
   <author>
     <name><![CDATA[Bill Smartt]]></name>
@@ -12,6 +12,94 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Counting Bits Set to 1]]></title>
+    <link href="http://bsmartt13.github.com/blog/2012/01/08/counting-bits-set-to-1/"/>
+    <updated>2012-01-08T07:02:00-08:00</updated>
+    <id>http://bsmartt13.github.com/blog/2012/01/08/counting-bits-set-to-1</id>
+    <content type="html"><![CDATA[<h3>Counting bits</h3>
+
+<p>Determining the number of bits set to 1 in a particular value is an interesting problem, commonly referred to as a <em>population count</em>, and often referred to in assembly language simply as <em>pop</em>.  My favorite approach to this problem, and the way it is often implemented in cpu hardware is a recursive approach, and is almost like the reverse of a binary search in the way it accomplishes counting the bits set to 1 in a register value.</p>
+
+<p>Suppose that our registers are n-bit registers.  Divide the problem into two halves, and we now need to count the number of one bits in two n/2 bit values.  We continue onto four n/4 bit values, eight n/8 bit values, etc. until the number of bits in each value we are counting is two, a trivially easy problem.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/* we start with 23 / 32 bits set in our register: 0xbc637eff */
+</span><span class='line'>1 0 1 1 1 1 0 0 0 1 1 0 0 0 1 1 0 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1|
+</span><span class='line'>   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+</span><span class='line'>0 1|1 0|1 0|0 0|0 1|0 1|0 0|1 0|0 1|1 0|1 0|0 1|1 0|1 0|1 0|1 0|
+</span><span class='line'>       |       |       |       |       |       |       |       |
+</span><span class='line'>0 0 1 1|0 0 1 0|0 0 1 0|0 0 1 0|0 0 1 1|0 0 1 1|0 1 0 0|0 1 0 0|
+</span><span class='line'>               |               |               |               |
+</span><span class='line'>0 0 0 0 0 1 0 1|0 0 0 0 0 1 0 0|0 0 0 0 0 1 1 0|0 0 0 0 1 0 0 0|
+</span><span class='line'>                               |                               |
+</span><span class='line'>0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1|0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0|
+</span><span class='line'>                                                               |
+</span><span class='line'>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 1 1| 
+</span><span class='line'>/* result is decimal 23 */</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The value we started with is <code>0xbc637eff</code>.  It is used for this example because it has a rather average population count.</p>
+
+<p>The code for this algorithm is much like the code for reversing bits in a register, and uses the same divide and conquer approach that we see in binary search.</p>
+
+<figure class='code'><figcaption><span>population count (pop.c)</span> <a href='http://bsmartt13.github.com/downloads/code/c/pop.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mh">0xbc637eff</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/* note: the order of these assignment statements is irrelevant. */</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0000ffff</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x0000ffff</span><span class="p">);</span>   
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This algorithm is based on the following formula:</p>
+
+<p><img class="center" src="http://bsmartt13.github.com/images/pop_formula.png" width="290" height="47"></p>
+
+<p>Let&#8217;s prove our equation in the case of a 4-bit register:</p>
+
+<p><img class="center" src="http://bsmartt13.github.com/images/pop_proof.png"></p>
+
+<p>You can try extending this proof to the case of a 32-bit register, and you will get the same results.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reversing Bits and Bytes]]></title>

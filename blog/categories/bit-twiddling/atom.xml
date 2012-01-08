@@ -4,7 +4,7 @@
   <title><![CDATA[Category: bit twiddling | SmarttBits]]></title>
   <link href="http://bsmartt13.github.com/blog/categories/bit-twiddling/atom.xml" rel="self"/>
   <link href="http://bsmartt13.github.com/"/>
-  <updated>2012-01-05T21:16:33-08:00</updated>
+  <updated>2012-01-08T10:47:02-08:00</updated>
   <id>http://bsmartt13.github.com/</id>
   <author>
     <name><![CDATA[Bill Smartt]]></name>
@@ -12,6 +12,218 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Counting Bits Set to 1]]></title>
+    <link href="http://bsmartt13.github.com/blog/2012/01/08/counting-bits-set-to-1/"/>
+    <updated>2012-01-08T07:02:00-08:00</updated>
+    <id>http://bsmartt13.github.com/blog/2012/01/08/counting-bits-set-to-1</id>
+    <content type="html"><![CDATA[<h3>Counting bits</h3>
+
+<p>Determining the number of bits set to 1 in a particular value is an interesting problem, commonly referred to as a <em>population count</em>, and often referred to in assembly language simply as <em>pop</em>.  My favorite approach to this problem, and the way it is often implemented in cpu hardware is a recursive approach, and is almost like the reverse of a binary search in the way it accomplishes counting the bits set to 1 in a register value.</p>
+
+<p>Suppose that our registers are n-bit registers.  Divide the problem into two halves, and we now need to count the number of one bits in two n/2 bit values.  We continue onto four n/4 bit values, eight n/8 bit values, etc. until the number of bits in each value we are counting is two, a trivially easy problem.</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/&lt;em> we start with 23 / 32 bits set in our register: 0xbc637eff &lt;/em>/
+</span><span class='line'>1 0 1 1 1 1 0 0 0 1 1 0 0 0 1 1 0 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1|
+</span><span class='line'>   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+</span><span class='line'>0 1|1 0|1 0|0 0|0 1|0 1|0 0|1 0|0 1|1 0|1 0|0 1|1 0|1 0|1 0|1 0|&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;pre>&lt;code>   |       |       |       |       |       |       |       |
+</span><span class='line'>&lt;/code>&lt;/pre>
+</span><span class='line'>
+</span><span class='line'>&lt;table>
+</span><span class='line'>&lt;thead>
+</span><span class='line'>&lt;tr>
+</span><span class='line'>&lt;th>0 0 1 1&lt;/th>
+</span><span class='line'>&lt;th>0 0 1 0&lt;/th>
+</span><span class='line'>&lt;th>0 0 1 0&lt;/th>
+</span><span class='line'>&lt;th>0 0 1 0&lt;/th>
+</span><span class='line'>&lt;th>0 0 1 1&lt;/th>
+</span><span class='line'>&lt;th>0 0 1 1&lt;/th>
+</span><span class='line'>&lt;th>0 1 0 0&lt;/th>
+</span><span class='line'>&lt;th>0 1 0 0&lt;/th>
+</span><span class='line'>&lt;/tr>
+</span><span class='line'>&lt;/thead>
+</span><span class='line'>&lt;tbody>
+</span><span class='line'>&lt;tr>
+</span><span class='line'>&lt;td>0 0 0 0 0 1 0 1&lt;/td>
+</span><span class='line'>&lt;td>0 0 0 0 0 1 0 0&lt;/td>
+</span><span class='line'>&lt;td>0 0 0 0 0 1 1 0&lt;/td>
+</span><span class='line'>&lt;td>0 0 0 0 1 0 0 0&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;/tr>
+</span><span class='line'>&lt;tr>
+</span><span class='line'>&lt;td>                               &lt;/td>
+</span><span class='line'>&lt;td>                               &lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;/tr>
+</span><span class='line'>&lt;tr>
+</span><span class='line'>&lt;td>0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1&lt;/td>
+</span><span class='line'>&lt;td>0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;/tr>
+</span><span class='line'>&lt;tr>
+</span><span class='line'>&lt;td>                                                               &lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;/tr>
+</span><span class='line'>&lt;tr>
+</span><span class='line'>&lt;td>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 1 1&lt;/td>
+</span><span class='line'>&lt;td> &lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;td>&lt;/td>
+</span><span class='line'>&lt;/tr>
+</span><span class='line'>&lt;/tbody>
+</span><span class='line'>&lt;/table>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;p>/&lt;em> result is decimal 23 &lt;/em>/</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The value we started with is <code>0xbc637eff</code>.  It is used for this example because it has a rather average population count.</p>
+
+<p>The code for this algorithm is much like the code for reversing bits in a register, and uses the same divide and conquer approach that we see in binary search.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>population count (pop.c)</span> <a href='/downloads/code/c/pop.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mh">0xbc637eff</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>	<span class="cm">/* note: the order of these assignment statements is irrelevant. */</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">);</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">);</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span><span class="p">);</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span><span class="p">);</span>
+</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0000ffff</span> <span class="o">+</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x0000ffff</span><span class="p">);</span>	
+</span><span class='line'>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This algorithm is based on the following formula:</p>
+
+<p><img class="center" src="/images/pop_formula.png" width="290" height="47"></p>
+
+<p>Let's prove our equation in the case of a 4-bit register:</p>
+
+<p><img class="center" src="/images/pop_proof.png"></p>
+
+<p>You can try extending this proof to the case of a 32-bit register, and you will get the same results.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reversing Bits and Bytes]]></title>

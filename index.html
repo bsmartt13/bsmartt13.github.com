@@ -9,7 +9,7 @@
   <meta name="author" content="Bill Smartt">
 
   
-  <meta name="description" content="Introduction Bits and Bytes need to be reversed quite often. Some computers store data in a little-endian format and some in a big-endian format. In &hellip;">
+  <meta name="description" content="Counting bits Determining the number of bits set to 1 in a particular value is an interesting problem, commonly referred to as a population count, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,51 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/01/08/counting-bits-set-to-1/">Counting Bits Set to 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-08T07:02:00-08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Counting bits</h3>
+
+<p>Determining the number of bits set to 1 in a particular value is an interesting problem, commonly referred to as a <em>population count</em>, and often referred to in assembly language simply as <em>pop</em>.  My favorite approach to this problem, and the way it is often implemented in cpu hardware is a recursive approach, and is almost like the reverse of a binary search in the way it accomplishes counting the bits set to 1 in a register value.</p>
+
+<p>Suppose that our registers are n-bit registers.  Divide the problem into two halves, and we now need to count the number of one bits in two n/2 bit values.  We continue onto four n/4 bit values, eight n/8 bit values, etc. until the number of bits in each value we are counting is two, a trivially easy problem.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/08/counting-bits-set-to-1/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/01/05/reversing-bits-and-bytes/">Reversing Bits and Bytes</a></h1>
     
     
@@ -141,6 +186,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/08/counting-bits-set-to-1/">Counting Bits Set to 1</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/01/05/reversing-bits-and-bytes/">Reversing Bits and Bytes</a>
