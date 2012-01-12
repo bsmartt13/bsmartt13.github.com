@@ -4,7 +4,7 @@
   <title><![CDATA[Category: hacking | SmarttBits]]></title>
   <link href="http://bsmartt13.github.com/blog/categories/hacking/atom.xml" rel="self"/>
   <link href="http://bsmartt13.github.com/"/>
-  <updated>2012-01-12T14:26:02-08:00</updated>
+  <updated>2012-01-12T14:47:31-08:00</updated>
   <id>http://bsmartt13.github.com/</id>
   <author>
     <name><![CDATA[Bill Smartt]]></name>
@@ -155,7 +155,7 @@ Let's give this exploit a try.  The payload was generated using msfpayload and i
 Take a look at these two commands I ran as I'm getting ready to run my exploit.  First, I confirm that the ftp server is up and listening on port 21, then I confirm there isn't already a listener on '4444'.  If there were already some other process, we would need to use a different port for our bindshell.
 <img src="/images/2012-01-12-ability-ftp-2-dot-34-stack-based-buffer-overflow/portchecka.png">
 We are ready to go.  Send the exploit.  After doing so, you can either check cmd.exe again with the netstat command to look for a listener on port 4444, or you can do it the exciting way and just try to connect to the XP machine from the attacker using netcat.  You can see when we connect to port 4444 with netcat now, we get our reverse shell:
-<img src="/images/2012-01-12-ability-ftp-2-dot-34-stack-based-buffer-overflow/revshellA.png">
+<img src="/images/2012-01-12-ability-ftp-2-dot-34-stack-based-buffer-overflow/revshella.png">
 <span class='pullquote-right' data-pullquote='step 4: pop a shell (and celebrate)'>step 4: pop a shell (and celebrate)This is essentially game over.  We can now transfer files to the host and use the account the ftp server was running as (was Admin in my case), execute files, add user accounts, steal passwords, etc.  As you can see from the screenshot below, the bindshell will interact with us just like a normal local bash shell:</span>
 <img src="/images/2012-01-12-ability-ftp-2-dot-34-stack-based-buffer-overflow/owneda.png">
 Now it's just a matter of uploading back orifice or some other back door for windows and we will have continuous access to the system, not just whenever the ftp server is running.</li>
