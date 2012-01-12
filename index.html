@@ -9,7 +9,7 @@
   <meta name="author" content="Bill Smartt">
 
   
-  <meta name="description" content="Counting bits Determining the number of bits set to 1 in a particular value is an interesting problem, commonly referred to as a population count, &hellip;">
+  <meta name="description" content="Assessing the Vulnerability Let&#8217;s try exploiting a known vulnerability in Ability FTP 2.34. This is a File Transfer Protocol (FTP) Server &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/12/ability-ftp-2-dot-34-stack-based-buffer-overflow/">Ability FTP 2.34 Stack-based Buffer Overflow</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-12T13:30:00-08:00" pubdate data-updated="true">Jan 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Assessing the Vulnerability</h3>
+
+<p>Let&#8217;s try exploiting a known vulnerability in Ability FTP 2.34.  This is a File Transfer Protocol (FTP) Server program made by code-crafters.com.  Let&#8217;s take a look at the cve (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-1626).  Here&#8217;s the description of the vulnerability in the software.</p>
+
+<blockquote><p>Buffer overflow in Ability Server 2.34, and possibly other versions, allows remote attackers to execute arbitrary code via a long STOR command.</p><footer><strong>CVE-2004-1626</strong> <cite><a href='http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-1626'>cve.mitre.org/cgi-bin/&hellip;</a></cite></footer></blockquote>
+
+
+<p>This is an extremely accurate CVE.  Most CVE&#8217;s do not contain specifics on how the attack works, just that one exists.  Here they even tell us what command we need to fuzz.
+Open up a windows XP box.  For this example I will be using Win XP Professional version 2002 Service Pack 3.  Unless you are comfortable computing the offsets and other things yourself, you need this version.
+Open up Ability FTP 2.34.  You can close the initial screen that pops up to reveal the main window.  Activate the FTP server.  You should now have something like this:</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/12/ability-ftp-2-dot-34-stack-based-buffer-overflow/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -186,6 +236,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/12/ability-ftp-2-dot-34-stack-based-buffer-overflow/">Ability FTP 2.34 Stack-based Buffer Overflow</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/01/08/counting-bits-set-to-1/">Counting Bits Set to 1</a>
