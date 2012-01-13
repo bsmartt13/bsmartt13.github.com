@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>What hackers need to know about the Patriot Act - SmarttBits</title>
+  <meta name="author" content="Bill Smartt">
+
+  
+  <meta name="description" content="Shortly after the September 11, 2001 terrorist attacks, the US government passed the PATRIOT act and told us it was needed to keep us safer from &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://bsmartt13.github.com/blog/2012/01/13/what-hackers-need-to-know-about-the-patriot-act">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="SmarttBits" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-27769868-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">SmarttBits</a></h1>
+  
+    <h2>Better living through hexadecimal.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:bsmartt13.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">What Hackers Need to Know About the Patriot Act</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-13T07:25:00-08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Shortly after the September 11, 2001 terrorist attacks, the US government passed the PATRIOT act and told us it was needed to keep us safer from terrorism.  PATRIOT stands for &#8220;Providing Appropriate Tools Required (to) Intercept (and) Obstruct Terrorism&#8221;. After the attacks was a very vulnerable time for our population, and Bush was able to use our fear against us to pass the bill.  I find it depressingly ironic that the bill was named &#8220;Patriot Act&#8221; yet was mainly composed of laws restricting our freedom, rather than advancing or even preserving the state of national security like it&#8217;s name implies.  Provisions changed the law surrounding computer crimes and hacking.  <!-- more --></p>
+
+<h3>Computer Fraud &amp; Abuse Act (CFAA)</h3>
+
+<p>The CFAA is the basic federal hacking law.  They make it illegal to exceed the authority in a protected computer system, and cause $5,000 in damages.</p>
+
+<h4>What does it mean to Exceed Authority on a Computer?</h4>
+
+<p><span class='pullquote-right' data-pullquote='Prior to 9/11, '>Prior to 9/11,
+If you have no permission to access the computer in any way at all, you are exceeding your authority by logging in.  If you log in using a brute-force password cracking attack or social engineering attack (and succeed either way), you can be charged with a violation of CFAA.  This is exceeding your authority because you have no authorization to be there in the first place.
+If you have certain permission to access the computer and you elevate your privileges to root/admin, you are exceeding also your authority. If you log into a system with an authorized username and password, but then use a local exploit to gain root access, this is also exceeding your authority.<br/>
+It is possible to be charged with two counts of CFAA.  If the prosecutor can prove you gained user access and then exploited the system again in order to elevate to root, you have exceeded your authority twice and can be charged twice.  (So I guess that means you&#8217;re better off sticking to remote root exploits to begin with, since it is essentially killing two birds with one stone.) </span></p>
+
+<h4>What is a Protected computer?</h4>
+
+<p>Not all computers are protected by the CFAA.  The term <code>protected computer</code> is used to distinguish a computer which is protected by the CFAA.  The requirement for this is that they must be used in interstate commerce. This means any computer connected to the internet.  So if you are accessing your target across the internet, you are in CFAA jurisdiction and can be charged accordingly.</p>
+
+<h3>Patriot Act Revisions</h3>
+
+<h4>Hackers can now be convicted as terrorists.</h4>
+
+<p>In order to qualify as a terrorist activity, you must meet three conditions:
+* Retaliative activity is a loosely defined term which means you are trying to get back at someone for something [you claim] they did to you.<br/>
+* Related to Classified information in some way.  (ex. Gaining access to classified information.)
+* Cause damage to governmental computer, or medical/physical injury.
+If you are deemed to be a terrorist, the feds can seize your assets first and ask questions later.  This is known as pre-conviction forfeiture (Think Guantanamo Bay). It is also important to note that terrorist acts can be punishable by life in prison or the death penalty.</p>
+
+<h4>$5,000 In Damages Trivialized</h4>
+
+<p>One of the most important aspects of the CFAA is the damages inflicted upon the victim.  This used to mean that they had to show evidence that you directly caused $5,000 worth of damage.  Say Google is suing you for DDoSing their gmail (email) system, and you manage to completely shut them down for 1 hour.  Google can bring earnings statements to the court and make a calculation: If google makes $24,000/day on their gmail system, your actions caused them to lose $1,000 ($24,000 / 24 days = $1000/day).  They would not be able to charge you because they failed to meet the minimum threshold.  This is no longer the case.  If Google takes any measures to investigate or repair their systems, those costs are now included too.  So if Google deems it necessary to pay a hard drive forensics specialist, they can count any costs associated with him.  The $5,000 limit has essentially vanished; it is doable by any corporation or large business, and is trivial to surpass.</p>
+
+<h4>Other Changes</h4>
+
+<ul>
+<li>Wiretaps are now usable in computer crime investigations.  If you are suspected of breaking into a computer, the feds can come after you with wiretaps.</li>
+<li>You no longer have to be successful at your attack.  If you attempt to break into a computer, you are now punished as if you had succeeded.  If you</li>
+<li>Previously the $5,000 had to be to one specific system.  Now, there needs to be $5,000 in aggregate damages, so if you cause $2,500 worth of damage to one server and $2,500 to another, it counts as $5,000 in aggregate damages and is a violation of CFAA.</li>
+<li>If you help plan, perpetrate, or are a source of influence over someone engaging in CFAA, you can now be charged with CFAA (Aiding &amp; Abetting).</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bill Smartt</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-13T07:25:00-08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://bsmartt13.github.com/blog/2012/01/13/what-hackers-need-to-know-about-the-patriot-act/" data-via="bsmartt13" data-counturl="http://bsmartt13.github.com/blog/2012/01/13/what-hackers-need-to-know-about-the-patriot-act/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/01/12/ability-ftp-2-dot-34-stack-based-buffer-overflow/" title="Previous Post: Ability FTP 2.34 Stack-based Buffer Overflow">&laquo; Ability FTP 2.34 Stack-based Buffer Overflow</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/13/what-hackers-need-to-know-about-the-patriot-act/">What hackers need to know about the Patriot Act</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/12/ability-ftp-2-dot-34-stack-based-buffer-overflow/">Ability FTP 2.34 Stack-based Buffer Overflow</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/08/counting-bits-set-to-1/">Counting Bits Set to 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/05/reversing-bits-and-bytes/">Reversing Bits and Bytes</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bsmartt13">@bsmartt13</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bsmartt13',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("bsmartt13", 5, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/bsmartt13" class="twitter-follow-button" data-show-count="false">Follow @bsmartt13</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Bill Smartt -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
