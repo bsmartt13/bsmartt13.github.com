@@ -97,6 +97,8 @@
 
 <time datetime="2012-01-05T13:48:00-08:00" pubdate data-updated="true">Jan 5<span>th</span>, 2012</time>
         
+         | <a href="#disqus_thread">Comments</a>
+        
       </p>
     
   </header>
@@ -231,11 +233,11 @@
 </span><span class='line'>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mh">0x01234567</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">REVERSE_BITS</span><span class="p">;</span>
 </span><span class='line'>  
 </span><span class='line'>  <span class="cm">/* note: the order of these assignment statements is irrelevant. */</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xAAAAAAAA</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xCCCCCCCC</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xf0f0f0f0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xff00ff00</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0000ffff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xffff0000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xAAAAAAAA</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xCCCCCCCC</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">4</span><span class="p">)</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xf0f0f0f0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">8</span><span class="p">)</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xff00ff00</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">16</span><span class="p">)</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span>           <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span>           <span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span> <span class="p">}</span>
 </span><span class='line'>  
 </span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
@@ -296,6 +298,12 @@
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -387,6 +395,22 @@
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'smarttbits';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://bsmartt13.github.com/blog/2012/01/05/reversing-bits-and-bytes/';
+        var disqus_url = 'http://bsmartt13.github.com/blog/2012/01/05/reversing-bits-and-bytes/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

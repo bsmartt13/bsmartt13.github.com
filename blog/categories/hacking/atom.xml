@@ -4,7 +4,7 @@
   <title><![CDATA[Category: hacking | SmarttBits]]></title>
   <link href="http://bsmartt13.github.com/blog/categories/hacking/atom.xml" rel="self"/>
   <link href="http://bsmartt13.github.com/"/>
-  <updated>2012-01-14T16:49:47-08:00</updated>
+  <updated>2012-01-17T07:38:59-08:00</updated>
   <id>http://bsmartt13.github.com/</id>
   <author>
     <name><![CDATA[Bill Smartt]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[What hackers need to know about the Patriot Act]]></title>
+    <link href="http://bsmartt13.github.com/blog/2012/01/13/what-hackers-need-to-know-about-the-patriot-act/"/>
+    <updated>2012-01-13T07:25:00-08:00</updated>
+    <id>http://bsmartt13.github.com/blog/2012/01/13/what-hackers-need-to-know-about-the-patriot-act</id>
+    <content type="html"><![CDATA[<p>Shortly after the September 11, 2001 terrorist attacks, the US government passed the PATRIOT act and told us it was needed to keep us safer from terrorism.  PATRIOT stands for "Providing Appropriate Tools Required (to) Intercept (and) Obstruct Terrorism". After the attacks was a very vulnerable time for our population, and Bush was able to use our fear against us to pass the bill.  I find it depressingly ironic that the bill was named "Patriot Act" yet was mainly composed of laws restricting our freedom, rather than advancing or even preserving the state of national security like it's name implies.  Provisions changed the law surrounding computer crimes and hacking.  <!-- more --></p>
+
+<h3>Computer Fraud &amp; Abuse Act (CFAA)</h3>
+
+<p>The CFAA is the basic federal hacking law.  They make it illegal to exceed the authority in a protected computer system, and cause $5,000 in damages.</p>
+
+<h4>What does it mean to Exceed Authority on a Computer?</h4>
+
+<p>If you have no permission to access the computer in any way at all, you are exceeding your authority by logging in.  If you log in using a brute-force password cracking attack or social engineering attack (and succeed either way), you can be charged with a violation of CFAA.  This is exceeding your authority because you have no authorization to be there in the first place.
+If you have certain permission to access the computer and you elevate your privileges to root/admin, you are exceeding also your authority. If you log into a system with an authorized username and password, but then use a local exploit to gain root access, this is also exceeding your authority.<br/>
+It is possible to be charged with two counts of CFAA.  If the prosecutor can prove you gained user access and then exploited the system again in order to elevate to root, you have exceeded your authority twice and can be charged twice.  (So I guess that means you're better off sticking to remote root exploits to begin with, since it is essentially killing two birds with one stone.)</p>
+
+<h4>What is a Protected computer?</h4>
+
+<p>Not all computers are protected by the CFAA.  The term <code>protected computer</code> is used to distinguish a computer which is protected by the CFAA.  The requirement for this is that they must be used in interstate commerce. This means any computer connected to the internet.  So if you are accessing your target across the internet, you are in CFAA jurisdiction and can be charged accordingly.</p>
+
+<h3>Patriot Act Revisions</h3>
+
+<h4>Hackers can now be convicted as terrorists.</h4>
+
+<p>In order to qualify as a terrorist activity, you must meet three conditions:
+* Retaliative activity is a loosely defined term which means you are trying to get back at someone for something [you claim] they did to you.<br/>
+* Related to Classified information in some way.  (ex. Gaining access to classified information.)
+* Cause damage to governmental computer, or medical/physical injury.
+If you are deemed to be a terrorist, the feds can seize your assets first and ask questions later.  This is known as pre-conviction forfeiture (Think Guantanamo Bay). It is also important to note that terrorist acts can be punishable by life in prison or the death penalty.</p>
+
+<h4>$5,000 In Damages Trivialized</h4>
+
+<p>One of the most important aspects of the CFAA is the damages inflicted upon the victim.  This used to mean that they had to show evidence that you directly caused $5,000 worth of damage.  Say Google is suing you for DDoSing their gmail (email) system, and you manage to completely shut them down for 1 hour.  Google can bring earnings statements to the court and make a calculation: If google makes $24,000/day on their gmail system, your actions caused them to lose $1,000 ($24,000 / 24 days = $1000/day).  They would not be able to charge you because they failed to meet the minimum threshold.  This is no longer the case.  If Google takes any measures to investigate or repair their systems, those costs are now included too.  So if Google deems it necessary to pay a hard drive forensics specialist, they can count any costs associated with him.  The $5,000 limit has essentially vanished; it is doable by any corporation or large business, and is trivial to surpass.</p>
+
+<h4>Other Changes</h4>
+
+<ul>
+<li>Wiretaps are now usable in computer crime investigations.  If you are suspected of breaking into a computer, the feds can come after you with wiretaps.</li>
+<li>You no longer have to be successful at your attack.  If you attempt to break into a computer, you are now punished as if you had succeeded.  If you</li>
+<li>Previously the $5,000 had to be to one specific system.  Now, there needs to be $5,000 in aggregate damages, so if you cause $2,500 worth of damage to one server and $2,500 to another, it counts as $5,000 in aggregate damages and is a violation of CFAA.</li>
+<li>If you help plan, perpetrate, or are a source of influence over someone engaging in CFAA, you can now be charged with CFAA (Aiding &amp; Abetting).</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ability FTP 2.34 Stack-based Buffer Overflow]]></title>
@@ -499,11 +546,11 @@ reverse the order of the <em>bits</em>:
 </span><span class='line'>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mh">0x01234567</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">REVERSE_BITS</span><span class="p">;</span>
 </span><span class='line'>	
 </span><span class='line'>	<span class="cm">/* note: the order of these assignment statements is irrelevant. */</span>
-</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xAAAAAAAA</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xCCCCCCCC</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xf0f0f0f0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xff00ff00</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>	<span class="n">x</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0000ffff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xffff0000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xAAAAAAAA</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xCCCCCCCC</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">4</span><span class="p">)</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x0f0f0f0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xf0f0f0f0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">8</span><span class="p">)</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x00ff00ff</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span>  <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0xff00ff00</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>	<span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&amp;</span> <span class="mi">16</span><span class="p">)</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span>           <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span>           <span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span> <span class="p">}</span>
 </span><span class='line'>	
 </span><span class='line'>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
